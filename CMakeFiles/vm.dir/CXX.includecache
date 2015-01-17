@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/mykyta/projects/vm/src/Iterator.cpp
+dynamic/exception.hpp
+-
+dynamic/var.hpp
+-
+
+/home/mykyta/projects/vm/src/Relational.cpp
+algorithm
+-
+dynamic/exception.hpp
+-
+dynamic/var.hpp
+-
+
