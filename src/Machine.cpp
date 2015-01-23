@@ -3,10 +3,10 @@
 # define DEBUG(str) cout << str << endl;
 # define DEBUG_HEX(num) cout << "0x" << hex << (unsigned int)num << endl;
 
-# define VALUE bytecode->Value()
+# define CURRENT_OPC bytecode->CurrentOpcode()
 # define NEXT_OPC bytecode->Next()
 # define NEXT_OPCS(n) bytecode->Next(n);
-# define BYTES(n) bytecode->Bytes(n);
+# define BYTES(n) bytecode->Bytes(n)
 # define BYTE_ARRAY(from,offset) bytecode->ByteArray(from,offset)
 # define JUMP(address) bytecode->Jump(address)
 # define loop while(true)
@@ -26,66 +26,33 @@ int Machine::ExecuteCode()
 	unsigned short type = 0;
 	loop
 	{
-		reg[IP] = bytecode->GetPointer();
-		byte var1, var2, var3, var4;
-		var value;
-		unsigned short int type;
-		var exit_code;
-
-		switch(VALUE)
+		reg[0] = bytecode->GetPointer();
+		switch(CURRENT_OPC)
 		{
-			case OBJECT:
+			case NOP:
 				NEXT_OPC;
-				var1 = VALUE;
+			break;
+			
+			case DUMP:
 				NEXT_OPC;
-				switch(var1)
-				{
-					case NEW:
-					{
-						NEXT_OPC;
-						type = BYTES(2);
-						NEXT_OPCS(2);
-						switch(type)
-						{
-							case 0x0103:
-								value = (signed int) BYTES(4);
-								stack.Push(heap.create(value));
-								NEXT_OPCS(4+1)
-								break;
-						}
-					};
-				}
-				break;
-			case VM:
-				NEXT_OPC;
-				switch(VALUE)
-				{
-					case NOP:
-						NEXT_OPC;
-						break;
-					case DUMP:
-						Dump();
-						NEXT_OPC;
-						break;
-					case EXIT:
-						if(stack.isEmpty())
-						{
-							return (signed int) reg[EX];
-						}
-						else
-						{
-							exit_code = (signed int) stack.Pop();
-							return exit_code;
-						}
-				}
-				break;
+				Dump();
+			break;
+
+			case EXIT:
+				return 0;
+
+			case INT:
+				stack.Push(heap.create( (signed) BYTES(4)));
+				NEXT_OPCS(4);
+			break;
+
 		}
 	}
 }
 
 void Machine::Dump()
 {
-	bytecode->Dump(reg[IP]);
+	bytecode->Dump(reg[0]);
 	stack.Dump();
 	reg.Dump();
 

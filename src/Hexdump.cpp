@@ -14,7 +14,7 @@
                 /* print hex data */
                 if(i < len)
                 {
-                        if(i == mark_at || i-1 == mark_at)
+                        if(i == mark_at)
                                printf(BOLDRED "%02x " RESET, 0xFF & ((char*)mem)[i]); 
                         else
                                 printf("%02x ", 0xFF & ((char*)mem)[i]);

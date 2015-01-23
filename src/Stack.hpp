@@ -14,5 +14,6 @@ public:
 	void Dump();
 	bool isEmpty();
 	unsigned int Top();
+	unsigned int operator [](unsigned int i) const;
 };
 # endif

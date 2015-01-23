@@ -33,7 +33,7 @@ void Bytecode::Jump(unsigned int Address)
 	Pointer = Address;
 }
 
-byte Bytecode::Value(unsigned int offset)
+byte Bytecode::CurrentOpcode(unsigned int offset)
 {
 	return code[Pointer+offset];
 }
@@ -64,7 +64,7 @@ unsigned int Bytecode::Bytes(size_t n)
 	for(unsigned int offset = 0; offset < n; offset++)
 	{
 		res <<= 8;
-		res += Value(offset);
+		res += CurrentOpcode(offset);
 	}
 	return res;
 }

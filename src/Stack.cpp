@@ -46,3 +46,8 @@ unsigned int Stack::Top()
 {
 	return stack.back();
 }
+
+unsigned int Stack::operator [](unsigned int i) const
+{
+	return stack[stack.size()-i-1];
+}

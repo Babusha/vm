@@ -14,7 +14,7 @@ public:
 	void Next(unsigned int to = 1);
 	void Prev(unsigned int to = 1);
 	void Jump(unsigned int Address);
-	byte Value(unsigned int offset = 0);
+	byte CurrentOpcode(unsigned int offset = 0);
 	bool End();
 	void Dump(int ptr = -1);
 	unsigned int GetPointer();
