@@ -20,17 +20,20 @@ int main(int argc, char* argv[])
 	auto *code = file.ByteArray();
 	Bytecode *bytecode = new Bytecode((byte*) code,file.Size());
 	Machine machine(bytecode);
-	
+
+	int exit_code;
 	try
 	{
-		machine.ExecuteCode();
+		exit_code = machine.ExecuteCode();
 	} catch(int sig)
 	{
 		cout << "\b\b"; // Deleting "^C"
 		machine.Dump();
+		exit(sig);
 	} catch(const char* message)
 	{
 		machine.Dump();
 		cout << endl << BOLDRED << message << RESET << endl;
 	}
+	return exit_code;
 }

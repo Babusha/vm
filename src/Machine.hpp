@@ -18,6 +18,6 @@ public:
 	Machine(Bytecode *_bytecode);
 	~Machine();
 	void Dump();
-	void ExecuteCode();
+	int ExecuteCode();
 };
 # endif

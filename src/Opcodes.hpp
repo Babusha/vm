@@ -18,6 +18,7 @@
 # 	define SIG 0x1
 # 	define SHORT 0x2
 # 	define INT 0x3
+#   define USIG_INT 0x0003
 # 	define FLOAT 0x4
 # 	define STRING 0x5
 # 	define USIG_BYTE 0x1

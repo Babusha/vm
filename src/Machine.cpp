@@ -11,6 +11,7 @@
 # define JUMP(address) bytecode->Jump(address)
 # define loop while(true)
 using namespace std;
+using namespace dynamic;
 
 Machine::Machine(Bytecode *_bytecode)
 {
@@ -20,16 +21,64 @@ Machine::Machine(Bytecode *_bytecode)
 
 Machine::~Machine() {};
 
-void Machine::ExecuteCode()
+int Machine::ExecuteCode()
 {
 	unsigned short type = 0;
 	loop
 	{
 		reg[IP] = bytecode->GetPointer();
-		byte size;
+		byte var1, var2, var3, var4;
+		var value;
+		unsigned short int type;
+		var exit_code;
+
 		switch(VALUE)
 		{
-
+			case OBJECT:
+				NEXT_OPC;
+				var1 = VALUE;
+				NEXT_OPC;
+				switch(var1)
+				{
+					case NEW:
+					{
+						NEXT_OPC;
+						type = BYTES(2);
+						NEXT_OPCS(2);
+						switch(type)
+						{
+							case 0x0103:
+								value = (signed int) BYTES(4);
+								stack.Push(heap.create(value));
+								NEXT_OPCS(4+1)
+								break;
+						}
+					};
+				}
+				break;
+			case VM:
+				NEXT_OPC;
+				switch(VALUE)
+				{
+					case NOP:
+						NEXT_OPC;
+						break;
+					case DUMP:
+						Dump();
+						NEXT_OPC;
+						break;
+					case EXIT:
+						if(stack.isEmpty())
+						{
+							return (signed int) reg[EX];
+						}
+						else
+						{
+							exit_code = (signed int) stack.Pop();
+							return exit_code;
+						}
+				}
+				break;
 		}
 	}
 }
